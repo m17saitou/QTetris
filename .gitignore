@@ -2,3 +2,7 @@
 *.o
 #Stash file ignore
 *.stash
+# exective file ignore
+QTetris
+#moc source file ignore
+moc*
