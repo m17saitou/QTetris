@@ -1,0 +1,4 @@
+#Object file ignore
+*.o
+#Stash file ignore
+*.stash
