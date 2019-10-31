@@ -51,10 +51,16 @@ OBJECTS_DIR   = ./
 ####### Files
 
 SOURCES       = main.cpp \
-		mainwindow.cpp moc_mainwindow.cpp
+		tetrixboard.cpp \
+		tetrixpiece.cpp \
+		tetrixwindow.cpp moc_tetrixboard.cpp \
+		moc_tetrixwindow.cpp
 OBJECTS       = main.o \
-		mainwindow.o \
-		moc_mainwindow.o
+		tetrixboard.o \
+		tetrixpiece.o \
+		tetrixwindow.o \
+		moc_tetrixboard.o \
+		moc_tetrixwindow.o
 DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/common/unix.conf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/common/linux.conf \
@@ -128,8 +134,12 @@ DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/exceptions.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/yacc.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/lex.prf \
-		QTetris.pro mainwindow.h main.cpp \
-		mainwindow.cpp
+		QTetris.pro tetrixboard.h \
+		tetrixpiece.h \
+		tetrixwindow.h main.cpp \
+		tetrixboard.cpp \
+		tetrixpiece.cpp \
+		tetrixwindow.cpp
 QMAKE_TARGET  = QTetris
 DESTDIR       = 
 TARGET        = QTetris
@@ -315,8 +325,8 @@ distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/data/dummy.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents mainwindow.h $(DISTDIR)/
-	$(COPY_FILE) --parents main.cpp mainwindow.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents tetrixboard.h tetrixpiece.h tetrixwindow.h $(DISTDIR)/
+	$(COPY_FILE) --parents main.cpp tetrixboard.cpp tetrixpiece.cpp tetrixwindow.cpp $(DISTDIR)/
 
 
 clean: compiler_clean 
@@ -348,13 +358,20 @@ compiler_moc_predefs_clean:
 moc_predefs.h: /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/data/dummy.cpp
 	g++ -pipe -O2 -Wall -W -dM -E -o moc_predefs.h /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/data/dummy.cpp
 
-compiler_moc_header_make_all: moc_mainwindow.cpp
+compiler_moc_header_make_all: moc_tetrixboard.cpp moc_tetrixwindow.cpp
 compiler_moc_header_clean:
-	-$(DEL_FILE) moc_mainwindow.cpp
-moc_mainwindow.cpp: mainwindow.h \
+	-$(DEL_FILE) moc_tetrixboard.cpp moc_tetrixwindow.cpp
+moc_tetrixboard.cpp: tetrixwindow.h \
+		tetrixpiece.h \
+		tetrixboard.h \
 		moc_predefs.h \
 		/usr/lib/qt5/bin/moc
-	/usr/lib/qt5/bin/moc $(DEFINES) --include ./moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I/home/saito/QTetris -I/home/saito/QTetris -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtConcurrent -I/usr/include/x86_64-linux-gnu/qt5/QtNetwork -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I/usr/include/c++/7 -I/usr/include/x86_64-linux-gnu/c++/7 -I/usr/include/c++/7/backward -I/usr/lib/gcc/x86_64-linux-gnu/7/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/7/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include mainwindow.h -o moc_mainwindow.cpp
+	/usr/lib/qt5/bin/moc $(DEFINES) --include ./moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I/home/saito/QTetris -I/home/saito/QTetris -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtConcurrent -I/usr/include/x86_64-linux-gnu/qt5/QtNetwork -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I/usr/include/c++/7 -I/usr/include/x86_64-linux-gnu/c++/7 -I/usr/include/c++/7/backward -I/usr/lib/gcc/x86_64-linux-gnu/7/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/7/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include tetrixboard.h -o moc_tetrixboard.cpp
+
+moc_tetrixwindow.cpp: tetrixwindow.h \
+		moc_predefs.h \
+		/usr/lib/qt5/bin/moc
+	/usr/lib/qt5/bin/moc $(DEFINES) --include ./moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I/home/saito/QTetris -I/home/saito/QTetris -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtConcurrent -I/usr/include/x86_64-linux-gnu/qt5/QtNetwork -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I/usr/include/c++/7 -I/usr/include/x86_64-linux-gnu/c++/7 -I/usr/include/c++/7/backward -I/usr/lib/gcc/x86_64-linux-gnu/7/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/7/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include tetrixwindow.h -o moc_tetrixwindow.cpp
 
 compiler_moc_source_make_all:
 compiler_moc_source_clean:
@@ -370,14 +387,27 @@ compiler_clean: compiler_moc_predefs_clean compiler_moc_header_clean
 
 ####### Compile
 
-main.o: main.cpp mainwindow.h
+main.o: main.cpp tetrixwindow.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o main.cpp
 
-mainwindow.o: mainwindow.cpp mainwindow.h
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o mainwindow.o mainwindow.cpp
+tetrixboard.o: tetrixboard.cpp tetrixboard.h \
+		tetrixwindow.h \
+		tetrixpiece.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o tetrixboard.o tetrixboard.cpp
 
-moc_mainwindow.o: moc_mainwindow.cpp 
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_mainwindow.o moc_mainwindow.cpp
+tetrixpiece.o: tetrixpiece.cpp tetrixpiece.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o tetrixpiece.o tetrixpiece.cpp
+
+tetrixwindow.o: tetrixwindow.cpp tetrixboard.h \
+		tetrixwindow.h \
+		tetrixpiece.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o tetrixwindow.o tetrixwindow.cpp
+
+moc_tetrixboard.o: moc_tetrixboard.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_tetrixboard.o moc_tetrixboard.cpp
+
+moc_tetrixwindow.o: moc_tetrixwindow.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_tetrixwindow.o moc_tetrixwindow.cpp
 
 ####### Install
 
