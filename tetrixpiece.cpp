@@ -49,13 +49,17 @@
 ****************************************************************************/
 
 #include "tetrixpiece.h"
-
+#include <random>
 #include <QtCore>
 
 //! [0]
 void TetrixPiece::setRandomShape()
 {
-    setShape(TetrixShape(QRandomGenerator::global()->bounded(7) + 1));
+
+    std::random_device seed_gen;
+    std::default_random_engine engine(seed_gen());
+    std::uniform_int_distribution<> dist(0, 7);
+    setShape(TetrixShape(dist(engine) + 1));
 }
 //! [0]
 

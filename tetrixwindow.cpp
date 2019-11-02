@@ -122,7 +122,7 @@ TetrixWindow::TetrixWindow(QWidget *parent)
     layout->addWidget(pauseButton, 5, 2);
     setLayout(layout);
 
-    setWindowTitle(tr("Tetrix"));
+    setWindowTitle(tr("QTetris"));
     resize(550, 370);
 }
 //! [6]
